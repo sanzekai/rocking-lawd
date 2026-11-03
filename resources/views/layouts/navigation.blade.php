@@ -15,6 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @role('organizer|admin')
+                        <x-nav-link :href="route('admin.artists.index')" :active="request()->routeIs('admin.artists.*')">
+                            {{ __('Artists') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
+                            {{ __('Events') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -70,6 +78,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @role('organizer|admin')
+                <x-responsive-nav-link :href="route('admin.artists.index')" :active="request()->routeIs('admin.artists.*')">
+                    {{ __('Artists') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
+                    {{ __('Events') }}
+                </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

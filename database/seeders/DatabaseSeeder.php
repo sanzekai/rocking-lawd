@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // 2. Buat Role organizer dan participant
         $organizerRole = Role::firstOrCreate(['name' => 'organizer']);
