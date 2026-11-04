@@ -14,6 +14,9 @@
 </head>
 <body>
     <div class="card">
+        <div style="margin-bottom: 10px;">
+            <img src="{{ public_path('images/logo.png') }}" style="height: 50px; width: auto;">
+        </div>
         <div style="font-size: 10px; font-weight: bold; letter-spacing: 1px;">ROCKING LAWD E-TICKET</div>
         <div class="code">{{ $ticket->ticket_code }}</div>
         

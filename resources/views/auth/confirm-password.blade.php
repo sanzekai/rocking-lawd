@@ -1,9 +1,9 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+    <div class="mb-4 text-xs text-slate-400 leading-relaxed">
+        {{ __('Ini adalah area aplikasi yang aman. Harap konfirmasi password Anda sebelum melanjutkan.') }}
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form method="POST" action="{{ route('password.confirm') }}" class="space-y-4">
         @csrf
 
         <!-- Password -->
@@ -18,9 +18,9 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex justify-end mt-4">
+        <div class="pt-2 flex justify-end">
             <x-primary-button>
-                {{ __('Confirm') }}
+                {{ __('Konfirmasi') }}
             </x-primary-button>
         </div>
     </form>
