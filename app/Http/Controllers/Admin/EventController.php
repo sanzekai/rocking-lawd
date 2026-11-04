@@ -20,9 +20,24 @@ class EventController extends Controller
      */
     public function index(): View
     {
-        $events = Event::with(['user', 'artists'])->latest()->paginate(10);
+        $sortBy = request()->input('sort_by', 'created_at');
+        $sortDir = request()->input('sort_dir', 'desc');
 
-        return view('admin.events.index', compact('events'));
+        $allowedSorts = ['title', 'event_date', 'tickets_sold_count', 'created_at'];
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'created_at';
+        }
+        $sortDir = $sortDir === 'asc' ? 'asc' : 'desc';
+
+        $events = Event::with(['user', 'artists'])
+            ->withCount(['tickets as tickets_sold_count' => function ($q) {
+                $q->whereHas('order', fn ($o) => $o->where('status', 'paid'));
+            }])
+            ->orderBy($sortBy, $sortDir)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.events.index', compact('events', 'sortBy', 'sortDir'));
     }
 
     /**
@@ -95,7 +110,20 @@ class EventController extends Controller
         $event->load('artists');
         $artists = Artist::orderBy('name')->get();
 
-        return view('admin.events.edit', compact('event', 'artists'));
+        // Siapkan data lineup yang sudah ada untuk pre-fill form
+        $selectedArtistIds = $event->artists->pluck('id')->map(fn ($id) => (string) $id)->values()->toArray();
+
+        // Data pivot per artist_id untuk pre-fill stage & waktu
+        $existingPivots = $event->artists->mapWithKeys(fn ($artist) => [
+            (string) $artist->id => [
+                'stage' => $artist->pivot->performance_stage ?? 'Main Stage',
+                'time'  => $artist->pivot->performance_time
+                    ? \Carbon\Carbon::parse($artist->pivot->performance_time)->format('H:i')
+                    : '',
+            ],
+        ])->toArray();
+
+        return view('admin.events.edit', compact('event', 'artists', 'selectedArtistIds', 'existingPivots'));
     }
 
     /**

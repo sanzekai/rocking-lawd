@@ -1,21 +1,21 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    <div class="mb-4 text-xs text-slate-400 leading-relaxed">
+        {{ __('Terima kasih telah mendaftar! Sebelum melanjutkan, silakan verifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan ke email Anda. Jika Anda tidak menerima email tersebut, kami dengan senang hati akan mengirimkannya lagi.') }}
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        <div class="mb-4 font-bold text-xs uppercase tracking-wider text-red-400 bg-red-950/80 border border-red-800 p-3 rounded-lg">
+            {{ __('Tautan verifikasi baru telah dikirimkan ke alamat email yang Anda berikan saat pendaftaran.') }}
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
+    <div class="mt-4 flex items-center justify-between gap-4">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
 
             <div>
                 <x-primary-button>
-                    {{ __('Resend Verification Email') }}
+                    {{ __('Kirim Ulang Email') }}
                 </x-primary-button>
             </div>
         </form>
@@ -23,8 +23,8 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('Log Out') }}
+            <button type="submit" class="text-xs text-slate-400 hover:text-white transition">
+                {{ __('Keluar') }}
             </button>
         </form>
     </div>

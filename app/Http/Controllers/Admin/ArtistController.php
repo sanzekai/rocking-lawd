@@ -7,6 +7,7 @@ use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
 use App\Models\Artist;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -16,11 +17,23 @@ class ArtistController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $artists = Artist::withCount('events')->latest()->paginate(10);
+        $sortBy = $request->input('sort_by', 'created_at');
+        $sortDir = $request->input('sort_dir', 'desc');
 
-        return view('admin.artists.index', compact('artists'));
+        $allowedSorts = ['name', 'events_count', 'created_at'];
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'created_at';
+        }
+        $sortDir = $sortDir === 'asc' ? 'asc' : 'desc';
+
+        $artists = Artist::withCount('events')
+            ->orderBy($sortBy, $sortDir)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.artists.index', compact('artists', 'sortBy', 'sortDir'));
     }
 
     /**
