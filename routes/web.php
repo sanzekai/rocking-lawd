@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ArtistController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ScannerController;
 use App\Http\Controllers\HomeController;
@@ -14,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/events/{slug}', [PublicEventController::class, 'show'])->name('events.show');
 
-// Dashboard (Breeze Default)
+// Dashboard
 Route::get('/dashboard', function () {
+    if (auth()->check() && (auth()->user()->hasRole('organizer') || auth()->user()->hasRole('admin'))) {
+        return redirect()->route('admin.dashboard');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -32,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Admin & Organizer Routes
 Route::middleware(['auth', 'role:organizer|admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('artists', ArtistController::class);
     Route::resource('events', EventController::class);
     Route::get('/events/{event}/scanner', [ScannerController::class, 'index'])->name('scanner.index');
