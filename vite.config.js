@@ -8,4 +8,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        // Mengizinkan domain ngrok mengakses server Vite lokal
+        allowedHosts: ['barometer-statue-repeated.ngrok-free.dev'],
+        cors: true
+    }
 });
+//
