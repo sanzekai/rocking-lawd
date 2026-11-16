@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <style>
+    .skull-spin {
+      transform-origin: 60px 60px;
+      animation: spin3d 4s linear infinite;
+    }
+    @keyframes spin3d {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+  </style>
+  <g class="skull-spin">
+    <!-- Mahkota Merah -->
+    <polygon points="35,35 42,15 52,28 60,12 68,28 78,15 85,35" fill="#DC2626" stroke="#1E293B" stroke-width="3" stroke-linejoin="round" />
+    <!-- Tengkorak -->
+    <path d="M35,55 C35,36 85,36 85,55 C85,68 78,73 75,78 L75,92 L45,92 L45,78 C42,73 35,68 35,55 Z" fill="#F8FAFC" stroke="#1E293B" stroke-width="3" />
+    <!-- Mata -->
+    <circle cx="48" cy="58" r="7" fill="#020617" />
+    <circle cx="72" cy="58" r="7" fill="#020617" />
+    <!-- Hidung -->
+    <polygon points="60,65 56,73 64,73" fill="#020617" />
+    <!-- Gigi -->
+    <line x1="52" y1="82" x2="52" y2="92" stroke="#1E293B" stroke-width="2.5" />
+    <line x1="60" y1="82" x2="60" y2="92" stroke="#1E293B" stroke-width="2.5" />
+    <line x1="68" y1="82" x2="68" y2="92" stroke="#1E293B" stroke-width="2.5" />
+    <!-- Mic Merah -->
+    <rect x="25" y="75" width="70" height="8" rx="4" fill="#DC2626" stroke="#1E293B" stroke-width="2.5" transform="rotate(-10 60 79)" />
+    <circle cx="92" cy="73" r="9" fill="#EF4444" stroke="#1E293B" stroke-width="2.5" />
+  </g>
+</svg>
